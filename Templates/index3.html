@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TESLA PRODUCTION MONITOR</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateTable() {
+            $.getJSON('/data3', function(response) {
+                var tableBody = $('#table-body');
+
+                // Clear existing table rows
+                tableBody.empty();
+
+                // Iterate over data and add rows to the table
+                $.each(response.data, function(index, item) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(item.st));
+                    row.append($('<td>').text(item.pa));
+                    row.append($('<td>').text(item.plan))
+                    row.append($('<td>').text(item.df))    
+                    row.append($('<td>').text(item.bd));
+                    tableBody.append(row);
+                });
+            });
+        }
+
+        // Update the table initially and then set an interval for subsequent updates
+        updateTable();
+        setInterval(updateTable, 5000); // Update every 5 seconds
+    </script>
+    
+    {% extends './base.html' %} 
+
+    {% block title %} TESLA YKM AUTO UPDATE {% endblock %}
+    
+    
+    {% block body %} 
+    
+    <h1>Prueba server waiki</h1>
+    
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1>Areas</h1>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class ="table-dark">
+                    <tr>
+                        <th>Estación</th>
+                        <th>Actual</th>
+                        <th>PLAN</th>
+                        <th>Diferencia</th>
+                        <th>Min de paro</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    {% endblock %}

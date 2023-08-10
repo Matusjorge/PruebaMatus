@@ -1,0 +1,70 @@
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function updateTablec() {
+        $.getJSON('/update_datacmms', function(response) {
+            var tableBody = $('#table-bodyc');
+
+            // Clear existing table rows
+            tableBody.empty();
+
+            // Iterate over data and add rows to the table
+            $.each(response.data, function(index, item) {
+                var row = $('<tr>');
+                    row.append($('<td>').text(item.st));
+                    row.append($('<td>').text(item.mes));
+                    row.append($('<td>').text(item.tw));
+                    row.append($('<td>').text(item.t_ope));
+                    row.append($('<td>').text(item.t_pa));
+                    row.append($('<td>').text(item.idT));
+                    row.append($('<td>').text(item.tT));
+                    row.append($('<td>').text(item.mttr));
+                    row.append($('<td>').text(item.mtbf));
+                        
+                tableBody.append(row);
+            });
+        });
+    }
+
+    // Update the table initially and then set an interval for subsequent updates
+    updateTablec();
+    setInterval(updateTablec, 5000); // Update every 5 seconds
+</script>
+
+
+{% extends './base.html' %} 
+
+{% block title %} CMMS {% endblock %}
+
+{% block body %} 
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="text-dark">
+            <hr class="border border-dark border-3 opacity-75">
+            <h3>TESLA YKM - Indicadores de Mantenimiento CMMS</h3>
+            <hr class="border border-dark border-3 opacity-75">
+          </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class ="table-dark">
+                <tr>
+                    <th>Estación</th>
+                    <th>Mes</th>
+                    <th>T work</th>
+                    <th>T ope</th>
+                    <th>T paro</th>
+                    <th>Top</th>
+                    <th>Tiempo</th>
+                    <th>MTTR</th>
+                    <th>MTBF</th>
+
+                </tr>
+            </thead>
+            <tbody id="table-bodyc"></tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

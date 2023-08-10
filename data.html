@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Update Example</title>
+</head>
+<body>
+    <div id="data-display"></div>
+
+    <script>
+        // Function to update data
+        function updateData() {
+            // Make an asynchronous request to fetch new data
+            fetch('/data')
+                .then(response => response.text())
+                .then(data => {
+                    // Update the data in the HTML element
+                    document.getElementById('data-display').innerText = data;
+                });
+        }
+
+        // Function to initiate data updates at a specific time ratio
+        function startDataUpdates(timeRatio) {
+            // Initial data update
+            updateData();
+
+            // Set interval for subsequent data updates
+            setInterval(updateData, timeRatio * 1000);
+        }
+
+        // Start data updates with a time ratio of 5 seconds
+        startDataUpdates(5);
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TESLA PRODUCTION MONITOR</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateTable() {
+            $.getJSON('/data', function(response) {
+                var tableBody = $('#table-body');
+
+                // Clear existing table rows
+                tableBody.empty();
+
+                // Iterate over data and add rows to the table
+                $.each(response.data, function(index, item) {
+                    var row = $('<tr>');
+                        row.append($('<td>').text(item.st));
+                        row.append($('<td>').text(item.pa));
+                        row.append($('<td>').text(item.plan));
+                        row.append($('<td>').text(item.df));
+                        row.append($('<td>').text(item.tt));
+                        row.append($('<td>').text(item.te));
+                        row.append($('<td>').text(item.thp));
+                        row.append($('<td>').text(item.pp));    
+                        row.append($('<td>').text(item.tp));
+                        row.append($('<td>').text(item.tmf));
+                        row.append($('<td>').text(item.tc));
+                        row.append($('<td>').text(item.ef));
+                            
+                    tableBody.append(row);
+                });
+            });
+        }
+
+        // Update the table initially and then set an interval for subsequent updates
+        updateTable();
+        setInterval(updateTable, 5000); // Update every 5 seconds
+    </script>
+
+    {% extends './base.html' %} 
+
+    {% block title %} TESLA YKM AUTO UPDATE {% endblock %}
+    
+    
+    {% block body %} 
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="text-dark">
+                <hr class="border border-dark border-3 opacity-75">
+                <h3>Monitor TESLA YKM - OEE PRODUCCION</h3>
+                <hr class="border border-dark border-3 opacity-75">
+              </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class ="table-dark">
+                    <tr>
+                        <th>Estación</th>
+                        <th>Actual</th>
+                        <th>PLAN</th>
+                        <th>Dif</th>
+                        <th>T. Total</th>
+                        <th>T. Maq</th>
+                        <th>T. OP</th>
+                        <th>P. Plan</th>
+                        <th>T. Falla</th> 
+                        <th>T. Muerto</th>
+                        <th>T. ciclo</th>
+                        <th>Eficiencia</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    {% endblock %}

@@ -1,0 +1,190 @@
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to update the cell value and background color
+        function updateCell() {
+            $.get('/update_data', function(data) {
+                // Iterate over the updated data and update the corresponding cell
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    
+                    var cell = $('#table-data tr').eq(i + 1).find('.Mat1');
+                    cell.text("Material");
+                    //cell.text(item.Mat)
+                    if (item.Mat1 > 0) {
+                        cell.css('background-color', 'darkorange');
+                    } else {
+                        cell.css('background-color', 'white');
+                    }
+                    
+                    var cell2 = $('#table-data tr').eq(i + 1).find('.ld1');
+                    cell2.text("Lider");
+                                       
+                    if (item.ld1 > 0) {
+                        cell2.css('background-color','yellow');
+                    } else {
+                        cell2.css('background-color', 'white');
+                    }
+
+                    var cell3 = $('#table-data tr').eq(i + 1).find('.Mt1');
+                    cell3.text("Mantenimiento");
+                                       
+                    if (item.Mt1 > 0) {
+                        cell3.css('background-color', 'red');
+                    } else {
+                        cell3.css('background-color', 'white');
+                    }
+
+                    var cell9 = $('#table-data tr').eq(i + 1).find('.Cal1');
+                    cell9.text("Calidad");
+                                       
+                    if (item.Cal1 > 0) {
+                        cell9.css('background-color', 'chartreuse');
+                    } else {
+                        cell9.css('background-color', 'white');
+                    }
+                    
+                }
+            });
+        }
+        // Call the updateCell function every 5 seconds (example)
+        setInterval(updateCell, 2000);
+    });
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to update the cell value and background color
+        function updateCell2() {
+            $.get('/update_data2', function(dataB) {
+                // Iterate over the updated data and update the corresponding cell
+                for (var i = 0; i < dataB.length; i++) {
+                    var item = dataB[i];
+                    
+                    var cell4 = $('#table-data2 tr').eq(i + 1).find('.Mat2');
+                    cell4.text("Material");
+                    //cell4.text(item.MatB);
+
+                    if (item.Mat2 > 0) {
+                        cell4.css('background-color', 'darkorange');
+                    } else {
+                        cell4.css('background-color', 'white');
+                    }
+                    
+                    var cell5 = $('#table-data2 tr').eq(i + 1).find('.ld2');
+                    cell5.text("Lider");
+                                       
+                    if (item.ld2 > 0) {
+                        cell5.css('background-color','yellow');
+                    } else {
+                        cell5.css('background-color', 'white');
+                    }
+
+                    var cell6 = $('#table-data2 tr').eq(i + 1).find('.Mt2');
+                    cell6.text("Mantenimiento");
+                                       
+                    if (item.Mt2 > 0) {
+                        cell6.css('background-color', 'red');
+                    } else {
+                        cell6.css('background-color', 'white');
+                    }
+                    
+                    var cell10 = $('#table-data2 tr').eq(i + 1).find('.Cal2');
+                    cell10.text("Calidad");
+                                       
+                    if (item.Cal2 > 0) {
+                        cell10.css('background-color', 'chartreuse');
+                    } else {
+                        cell10.css('background-color', 'white');
+                    }
+
+                    
+                }
+            });
+        }
+
+        // Call the updateCell function every 5 seconds (example)
+        setInterval(updateCell2, 2000);
+    });
+</script>
+
+
+{% extends './base.html' %} 
+
+{% block title %} ANDON TESLA {% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-evenly">
+ <div class="col-md-5 text-center">
+    <div class="text-dark">
+        <hr class="border border-dark border-3 opacity-75">
+        <h2>ANDON Tesla REAR 1</h2>
+        <hr class="border border-dark border-3 opacity-75">
+      </div>
+  <div class="table-responsive">
+   <table id="table-data" class="table table-striped table-bordered" >
+    <thead thead class ="table-dark">
+        <tr>
+            <th>Estación</th>
+            <th>Mat</th>
+            <th>Lider</th>
+            <th>Mtto</th>
+            <th>QTY</th>
+        </tr>
+     </thead>
+     <tbody>
+        {% for item in data %}
+            <tr>
+              <td class="st">{{ item.st }}</td>
+              <td class="Mat1">{{ item.Mat1 }}</td>
+              <td class="ld1">{{ item.ld1 }}</td>
+              <td class="Mt1">{{ item.Mt1 }}</td>
+              <td class="Cal1">{{ item.Cal1 }}</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+ </table>
+ </div>
+ </div>
+
+
+  <div class="col-md-5 text-center">
+    <div class="text-dark">
+        <hr class="border border-dark border-3 opacity-75">
+        <h2>ANDON TESLA FR2</h2>
+        <hr class="border border-dark border-3 opacity-75">
+      </div>
+     <div class="table-responsive">
+     <table id="table-data2" class="table table-striped table-bordered" >
+        <thead thead class ="table-dark">
+            <tr>
+                <th>Estación</th>
+                <th>Mat</th>
+                <th>Lider</th>
+                <th>Mtto</th>
+                <th>QTY</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in dataB %}
+                <tr>
+                  <td class="st2">{{ item.st2 }}</td>
+                  <td class="Mat2">{{ item.Mat2 }}</td>
+                  <td class="ld2">{{ item.ld2 }}</td>
+                  <td class="Mt2">{{ item.Mt2 }}</td>
+                  <td class="Cal2">{{ item.Cal2 }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

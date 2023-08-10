@@ -1,0 +1,55 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateTable() {
+            $.getJSON('/dataAndon', function(response) {
+                var tableBody = $('#table-body');
+
+                // Clear existing table rows
+                tableBody.empty();
+
+                // Iterate over data and add rows to the table
+                $.each(response.dataAdn, function(index, item) {
+                    var row = $('<tr>');
+                        row.append($('<td>').text(item.st));
+                        row.append($('<td>').text(item.Mat));
+                        row.append($('<td>').text(item.Ld));
+                        row.append($('<td>').text(item.Mt));
+                            
+                    tableBody.append(row);
+                });
+            });
+        }
+
+        // Update the table initially and then set an interval for subsequent updates
+        updateTable();
+        setInterval(updateTable, 5000); // Update every 5 seconds
+    </script>
+
+
+
+{% extends './base.html' %} 
+
+{% block title %} Andon System {% endblock %}
+
+{% block body %} 
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1>TESLA-YKM ANDON SYSTEM</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class ="table-dark">
+                <tr>
+                    <th>Estación</th>
+                    <th>Material</th>
+                    <th>Lider</th>
+                    <th>Mantto</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
